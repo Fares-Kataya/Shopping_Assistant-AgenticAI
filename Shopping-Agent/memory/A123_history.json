@@ -1,0 +1,15 @@
+{
+  "user_id": "A123",
+  "history": [
+    {
+      "product": "Coffee Maker",
+      "category": "home",
+      "price": 80
+    },
+    {
+      "product": "Coffee Maker",
+      "category": "home",
+      "price": 80
+    }
+  ]
+}

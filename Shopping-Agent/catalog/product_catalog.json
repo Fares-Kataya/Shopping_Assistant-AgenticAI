@@ -1,0 +1,13 @@
+[
+	{ "product": "Wireless Mouse", "category": "electronics", "price": 25 },
+	{ "product": "Gaming Keyboard", "category": "electronics", "price": 75 },
+	{ "product": "4K Monitor", "category": "electronics", "price": 200 },
+	{ "product": "USB-C Hub", "category": "electronics", "price": 45 },
+	{ "product": "Yoga Mat", "category": "sportswear", "price": 20 },
+	{ "product": "Trail Running Shoes", "category": "sportswear", "price": 100 },
+	{ "product": "Protein Powder", "category": "sportswear", "price": 35 },
+	{ "product": "Resistance Bands", "category": "sportswear", "price": 15 },
+	{ "product": "Coffee Maker", "category": "home", "price": 80 },
+	{ "product": "Air Purifier", "category": "home", "price": 150 },
+	{ "product": "Smart Thermostat", "category": "home", "price": 120 }
+]
