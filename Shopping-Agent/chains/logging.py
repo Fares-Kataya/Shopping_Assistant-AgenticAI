@@ -27,6 +27,6 @@ def load_recent_interactions(user_id: str, limit: int = 3) -> list[dict]:
                 entry = json.loads(line)
             except json.JSONDecodeError:
                 continue
-        if entry.get("user_id") == user_id:
-            interactions.append(entry)
+            if entry.get("user_id") == user_id:
+                interactions.append(entry)
     return interactions[-limit:]

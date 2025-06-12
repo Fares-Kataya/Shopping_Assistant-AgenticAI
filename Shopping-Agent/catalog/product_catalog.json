@@ -7,7 +7,7 @@
 	{ "product": "Trail Running Shoes", "category": "sportswear", "price": 100 },
 	{ "product": "Protein Powder", "category": "sportswear", "price": 35 },
 	{ "product": "Resistance Bands", "category": "sportswear", "price": 15 },
-	{ "product": "Coffee Maker", "category": "home", "price": 80 },
-	{ "product": "Air Purifier", "category": "home", "price": 150 },
-	{ "product": "Smart Thermostat", "category": "home", "price": 120 }
+	{ "name": "Coffee Maker", "category": "home", "price": 80 },
+	{ "name": "Air Purifier", "category": "home", "price": 150 },
+	{ "name": "Smart Thermostat", "category": "home", "price": 120 }
 ]
