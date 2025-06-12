@@ -20,7 +20,7 @@ print(f"Using {PROVIDER} with model {MODEL}")
 
 if __name__ == "__main__":
 
-    user_ID = "A123"
+    user_ID = "B456"
     try:
     #Fetching Buyer History
         resp = requests.get(f"{API_URL}/{user_ID}/history")
@@ -30,7 +30,7 @@ if __name__ == "__main__":
     #piplining the history to feed the LLM
 
     #recommendation chain
-        reco = recommend_category(history, api_key=API_KEY,model_name=MODEL, model_provider=PROVIDER)
+        reco = recommend_category(user_ID, history, api_key=API_KEY, model_name=MODEL, model_provider=PROVIDER)
         category = reco.get("category")
         reason = reco.get("reason")
         print(f"Recommendation: {category}\nJustification: {reason}")
