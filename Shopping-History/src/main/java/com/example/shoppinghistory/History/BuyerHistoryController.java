@@ -1,14 +1,19 @@
 package com.example.shoppinghistory.History;
+
 import com.example.shoppinghistory.History.dto.BuyerHistoryRequest;
+import com.example.shoppinghistory.History.dto.HistoryItemDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/buyers")
 public class BuyerHistoryController {
 
     private final BuyerHistoryService service;
+
     public BuyerHistoryController(BuyerHistoryService service) {
         this.service = service;
     }
@@ -24,6 +29,7 @@ public class BuyerHistoryController {
         service.saveBuyerHistory(req);
         return ResponseEntity.ok("Buyer history saved for user: " + req.getUser_id());
     }
+
     @GetMapping(
             path = "/{userId}/history",
             produces = "application/json"
@@ -34,5 +40,26 @@ public class BuyerHistoryController {
         return service.getBuyerHistory(userId)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @PatchMapping(
+            path = "/{userId}/history",
+            consumes = "application/json",
+            produces = "application/json"
+    )
+    public ResponseEntity<BuyerHistory> patchHistory(
+            @PathVariable String userId,
+            @RequestBody List<HistoryItemDTO> newItems
+    ) {
+        BuyerHistory updated = service.appendHistory(userId, newItems);
+        return ResponseEntity.ok(updated);
+    }
+
+    @DeleteMapping(
+            path = "/{userId}/history"
+    )
+    public ResponseEntity<Void> deleteHistory(@PathVariable String userId) {
+        service.clearHistory(userId);
+        return ResponseEntity.noContent().build();
     }
 }
