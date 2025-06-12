@@ -1,15 +1,11 @@
-import json
-from datetime import datetime
 from pathlib import Path
+from datetime import datetime
+import json
 
 INTERACTION_LOG = "logs/interaction_log.jsonl"
 
 
 def log_interaction(user_id: str, prompt: str, response: str) -> None:
-    """
-    Append a JSONL entry containing the user_id, full prompt text,
-    raw LLM response, and an ISO timestamp.
-    """
     Path("logs").mkdir(exist_ok=True)
     entry = {
         "user_id": user_id,
@@ -21,7 +17,7 @@ def log_interaction(user_id: str, prompt: str, response: str) -> None:
         f.write(json.dumps(entry) + "\n")
 
 
-def load_recent_interactions(user_id: str, limit: int=3) -> list[dict]:
+def load_recent_interactions(user_id: str, limit: int = 3) -> list[dict]:
     interactions = []
     if not Path(INTERACTION_LOG).exists():
         return interactions

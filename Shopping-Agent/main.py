@@ -1,62 +1,59 @@
 import os
-import requests
-from chains.recommend_chain import recommend_category
-from chains.search_chain import recommend_top_3_products
-from chains.purchase_chain import log_purchase
-from memory.memory_manager import update_buyer_history
 from dotenv import load_dotenv
+from langchain.agents import initialize_agent, AgentType
+from langchain.tools import StructuredTool
+from chains.tools import make_tools, run_shopping_flow
+from llm.llm_provider import get_chat_llm
 
 load_dotenv()
 
-# the only value to change to switch llm -> Options: "OPENAI", "ANTHROPIC", "GOOGLE"
 model = "GOOGLE"
-
 API_KEY = os.getenv(f"{model}_API_KEY")
 MODEL = os.getenv(f"{model}_MODEL")
 PROVIDER = os.getenv(f"{model}_PROVIDER")
-API_URL = "http://localhost:8080/api/buyers"
+API_URL = os.getenv("API_URL")
 
-print(f"Using {PROVIDER} with model {MODEL}")
+USER_ID = "B456"
+
+tools = make_tools(
+    user_id=USER_ID,
+    api_key=API_KEY,
+    model_name=MODEL,
+    model_provider=PROVIDER,
+    spring_url=API_URL
+)
+
+def run_shopping_flow_no_args():
+    return run_shopping_flow(
+        user_id=USER_ID,
+        api_key=API_KEY,
+        model_name=MODEL,
+        model_provider=PROVIDER,
+        spring_url=API_URL
+    )
+
+tools.append(
+    StructuredTool.from_function(
+        func=run_shopping_flow_no_args,
+        name="run_shopping_flow",
+        description="Run end-to-end: recommend -> search -> purchase -> memory",
+        return_direct=True
+    )
+)
+
+llm = get_chat_llm(
+    api_key=API_KEY,
+    model_name=MODEL,
+    model_provider=PROVIDER
+)
+
+agent = initialize_agent(
+    tools=tools,
+    llm=llm,
+    agent=AgentType.OPENAI_FUNCTIONS,
+    verbose=True
+)
 
 if __name__ == "__main__":
-
-    user_ID = "B456"
-    try:
-    #Fetching Buyer History
-        resp = requests.get(f"{API_URL}/{user_ID}/history")
-        resp.raise_for_status()
-        data = resp.json()
-        history = data["history"]
-    #piplining the history to feed the LLM
-
-    #recommendation chain
-        reco = recommend_category(user_ID, history, api_key=API_KEY, model_name=MODEL, model_provider=PROVIDER)
-        category = reco.get("category")
-        reason = reco.get("reason")
-        print(f"Recommendation: {category}\nJustification: {reason}")
-
-    #Product Search
-        avg_price = sum(item["price"] for item in history) / len(history)
-        top3 = recommend_top_3_products(category, avg_price)
-        print("Top 3 Products for you:")
-        for i, product in enumerate(top3, 1):
-            print(f"  {i}. {product}")
-
-    #Purchase Simulation logging
-        selected = top3[0] if top3 else None
-        if selected:
-            result = log_purchase(user_ID, selected)
-            print(f"✅ {result}")
-
-            # Memory Update
-            print("💾 Updating memory...")
-            update_buyer_history(user_ID, selected)
-            print("✅ Flow complete!")
-        else:
-            print("No products found in the recommended category")
-    except requests.RequestException as e:
-        print(f"API Error: {e}")
-    except Exception as e:
-        print(f"Error: {e}")
-        import traceback
-        traceback.print_exc()
+    result = agent.run("Please execute the shopping flow for me.")
+    print("\nAgent output:\n", result)

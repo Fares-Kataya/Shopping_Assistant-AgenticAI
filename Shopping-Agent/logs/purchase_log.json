@@ -8,6 +8,10 @@
     {"user_id": "A123", "product": {"product": "Smart Thermostat", "category": "home", "price": 120}, "timestamp": "2025-06-12T04:19:35.278333Z"},
     {"user_id": "A123", "product": {"product": "Smart Thermostat", "category": "home", "price": 120}, "timestamp": "2025-06-12T04:21:40.471374Z"},
     {"user_id": "A123", "product": {"product": "Smart Thermostat", "category": "home", "price": 120}, "timestamp": "2025-06-12T04:22:36.520001Z"},
-    {"user_id": "A123", "product": {"product": "Smart Thermostat", "category": "home", "price": 120}, "timestamp": "2025-06-12T04:23:25.613358Z"}
-    {"user_id": "B456", "product": {"product": "Wireless Mouse", "category": "electronics", "price": 25}, "timestamp": "2025-06-12T04:38:28.078197Z"}
+    {"user_id": "A123", "product": {"product": "Smart Thermostat", "category": "home", "price": 120}, "timestamp": "2025-06-12T04:23:25.613358Z"},
+    {"user_id": "B456", "product": {"product": "Wireless Mouse", "category": "electronics", "price": 25}, "timestamp": "2025-06-12T04:38:28.078197Z"},
+    {"user_id": "B456", "product": {"product": "Wireless Mouse", "category": "electronics", "price": 25}, "timestamp": "2025-06-12T05:20:53.048420Z"},
+    {"user_id": "B456", "product": {"product": "Wireless Mouse", "category": "electronics", "price": 25}, "timestamp": "2025-06-12T12:14:40.810136Z"}
 ]
+{"user_id": "A123", "product": {"product": "Coffee Maker", "category": "home", "price": 80}, "timestamp": "2025-06-12T12:53:00.129495Z"}
+{"user_id": "B456", "product": {"product": "Wireless Mouse", "category": "electronics", "price": 25}, "timestamp": "2025-06-12T12:53:44.135585Z"}
